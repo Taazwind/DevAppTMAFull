@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
 
             const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
             const dateDebut = document.getElementById('dateDebut').value;
             const dateFin = document.getElementById('dateFin').value;
             const raison = document.getElementById('raison').value;
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const demande = {
                 nom,
+                prenom,
                 dateDebut,
                 dateFin,
                 raison,
@@ -55,12 +57,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.classList.add('p-4', 'border', 'rounded-lg', 'shadow-sm');
                 li.innerHTML = `
                     <strong>Nom:</strong> ${demande.nom}<br>
+                    <strong>Prénom:</strong> ${demande.prenom}<br>
                     <strong>Date de début:</strong> ${demande.dateDebut}<br>
                     <strong>Date de fin:</strong> ${demande.dateFin}<br>
                     <strong>Raison:</strong> ${demande.raison}<br>
                     <strong>Statut:</strong> <span class="font-semibold ${getStatutClass(demande.statut)}">${demande.statut}</span>
                 `;
                 historique.appendChild(li);
+            });
+        }
+    }
+
+    function afficherDemandesValidation(demandes) {
+        if (demandesValidation) {
+            demandesValidation.innerHTML = '';
+            demandes.forEach((demande, index) => {
+                const li = document.createElement('li');
+                li.classList.add('p-6', 'border', 'rounded-lg', 'shadow-md', 'bg-white');
+                li.innerHTML = `
+                    <div class="mb-4">
+                        <strong>Nom:</strong> ${demande.nom}<br>
+                        <strong>Prénom:</strong> ${demande.prenom}<br>
+                        <strong>Date de début:</strong> ${demande.dateDebut}<br>
+                        <strong>Date de fin:</strong> ${demande.dateFin}<br>
+                        <strong>Raison:</strong> ${demande.raison}<br>
+                        <strong>Statut:</strong> <span class="font-semibold ${getStatutClass(demande.statut)}">${demande.statut}</span>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-green-500 text-white py-2 rounded hover:bg-green-600" onclick="changerStatut(${index}, 'approuvé')">Approuver</button>
+                        <button class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600" onclick="changerStatut(${index}, 'refusé')">Refuser</button>
+                    </div>
+                `;
+                demandesValidation.appendChild(li);
             });
         }
     }
