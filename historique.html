@@ -26,6 +26,17 @@
                 window.location.href = 'login.html';
             }
 
+            const logoutButton = document.createElement('button');
+            logoutButton.textContent = 'Déconnexion';
+            logoutButton.classList.add('mt-4', 'bg-red-500', 'text-white', 'py-2', 'px-4', 'rounded', 'hover:bg-red-600');
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('isAuthenticated');
+                window.location.href = 'login.html';
+            });
+
+            const container = document.querySelector('.max-w-4xl');
+            container.appendChild(logoutButton);
+
             if (historique) {
                 historique.innerHTML = '';
                 demandes.forEach(demande => {
