@@ -5,7 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('popup');
     const popupMessage = document.getElementById('popupMessage');
 
+
     if (form) {
+
+        document.getElementById('raison').addEventListener('change', function() {
+            const raison = this.value;
+            if (raison === 'Autre') {
+                document.getElementById('autreRaison').classList.remove('hidden');
+                console.log('autre');
+            } else {
+                document.getElementById('autreRaison').classList.add('hidden');
+            }
+        }
+        );
+
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -13,7 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const prenom = document.getElementById('prenom').value;
             const dateDebut = document.getElementById('dateDebut').value;
             const dateFin = document.getElementById('dateFin').value;
-            const raison = document.getElementById('raison').value;
+            let raison = document.getElementById('raison').value;
+
+            if (raison === 'Autre') {
+                if (document.getElementById('autreRaison').value === '') {
+                    afficherPopup("Veuillez spécifier la raison.");
+                    return;
+                }
+                raison = document.getElementById('autreRaison').value;
+            }
 
             const dateDebutObj = new Date(dateDebut);
             const dateActuelle = new Date();
