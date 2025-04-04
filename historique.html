@@ -21,6 +21,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const historique = document.getElementById('historique');
             const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
+            
+            if (localStorage.getItem('isAuthenticated') !== 'true') {
+                window.location.href = 'login.html';
+            }
 
             if (historique) {
                 historique.innerHTML = '';
