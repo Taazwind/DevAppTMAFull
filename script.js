@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('congeForm');
     const historique = document.getElementById('historique');
     const demandesValidation = document.getElementById('demandesValidation');
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popupMessage');
 
     if (form) {
         form.addEventListener('submit', function(event) {
@@ -12,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateDebut = document.getElementById('dateDebut').value;
             const dateFin = document.getElementById('dateFin').value;
             const raison = document.getElementById('raison').value;
+
+            const dateDebutObj = new Date(dateDebut);
+            const dateActuelle = new Date();
+
+            if (dateDebutObj <= dateActuelle) {
+                afficherPopup("La date de début ne peut pas être antérieure ou égal à la date actuelle.");
+                return;
+            }
 
             const demande = {
                 nom,
@@ -29,6 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
             afficherHistorique(demandes);
             form.reset();
         });
+    }
+
+        function afficherPopup(message) {
+        popupMessage.textContent = message;
+        popup.classList.remove('hidden');
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 5000);
     }
 
     function afficherHistorique(demandes) {
@@ -86,17 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.changerStatut = function(index, statut) {
-        let demandes = JSON.parse(localStorage.getItem('demandes')) || [];
-        demandes[index].statut = statut;
-        localStorage.setItem('demandes', JSON.stringify(demandes));
-        afficherDemandesValidation(demandes);
-        if (historique) {
-            afficherHistorique(demandes);
-        }
-    };
-
     const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
     afficherHistorique(demandes);
-    afficherDemandesValidation(demandes);
 });
