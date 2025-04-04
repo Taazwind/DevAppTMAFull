@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const nom = document.getElementById('nom').value;
             const prenom = document.getElementById('prenom').value;
+            const input_second_prenom = document.getElementById('prenom_2');
+            let second_prenom = input_second_prenom.value;
+            const placeholderValue = input_second_prenom.placeholder;
             const dateDebut = document.getElementById('dateDebut').value;
             const dateFin = document.getElementById('dateFin').value;
             let raison = document.getElementById('raison').value;
@@ -39,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateDebutObj = new Date(dateDebut);
             const dateActuelle = new Date();
 
+            if (!second_prenom) {
+                second_prenom = placeholderValue;
+            }
+
             if (dateDebutObj <= dateActuelle) {
                 afficherPopup("La date de début ne peut pas être antérieure ou égal à la date actuelle.");
                 return;
@@ -47,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const demande = {
                 nom,
                 prenom,
+                second_prenom,
                 dateDebut,
                 dateFin,
                 raison,
@@ -79,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.innerHTML = `
                     <strong>Nom:</strong> ${demande.nom}<br>
                     <strong>Prénom:</strong> ${demande.prenom}<br>
+                    <strong>2ème Prénom:</strong> ${demande.second_prenom}<br>
                     <strong>Date de début:</strong> ${demande.dateDebut}<br>
                     <strong>Date de fin:</strong> ${demande.dateFin}<br>
                     <strong>Raison:</strong> ${demande.raison}<br>
@@ -99,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="mb-4">
                         <strong>Nom:</strong> ${demande.nom}<br>
                         <strong>Prénom:</strong> ${demande.prenom}<br>
+                        <strong>2ème Prénom:</strong> ${demande.second_prenom}<br>
                         <strong>Date de début:</strong> ${demande.dateDebut}<br>
                         <strong>Date de fin:</strong> ${demande.dateFin}<br>
                         <strong>Raison:</strong> ${demande.raison}<br>
