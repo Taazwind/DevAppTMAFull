@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function afficherHistorique(demandes) {
         if (historique) {
             historique.innerHTML = '';
-            
             demandes.forEach(demande => {
                 const li = document.createElement('li');
                 li.classList.add('p-4', 'border', 'rounded-lg', 'shadow-sm');
@@ -117,6 +116,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
     afficherHistorique(demandes);
-
-    console.log(demandes);
 });
