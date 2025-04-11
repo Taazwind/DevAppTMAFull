@@ -70,6 +70,11 @@
     <script src="script.js"></script>
 
     <script>
+        function handleLogout() {
+            localStorage.removeItem('isAuthenticated');
+        }
+
+
         if (localStorage.getItem('isAuthenticated') !== 'true') {
             document.getElementById('admin_pages').classList.add('hidden');
             document.getElementById('logout').classList.add('hidden');
