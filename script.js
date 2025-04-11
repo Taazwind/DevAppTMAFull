@@ -99,6 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function afficherDemandesValidation(demandes) {
+        console.log("affichage de la demandes",demandes);
+
         if (demandesValidation) {
             demandesValidation.innerHTML = '';
             demandes.forEach((demande, index) => {
@@ -135,6 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    window.changerStatut = function(index, statut) {
+        let demandes = JSON.parse(localStorage.getItem('demandes')) || [];
+        demandes[index].statut = statut;
+        localStorage.setItem('demandes', JSON.stringify(demandes));
+        afficherDemandesValidation(demandes);
+        if (historique) {
+            afficherHistorique(demandes);
+        }
+    };
+
     const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
     afficherHistorique(demandes);
+    afficherDemandesValidation(demandes);
 });

@@ -16,10 +16,16 @@
         <a href="index.html" class="block text-center text-blue-500 hover:underline">Retour à la page principale</a>
     </div>
     <script src="script.js">
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('isAuthenticated') !== 'true') {
                 window.location.href = 'login.html';
             }
+
+            const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
+
+            afficherDemandesValidation(demandes);
 
             const logoutButton = document.createElement('button');
             logoutButton.textContent = 'Déconnexion';
