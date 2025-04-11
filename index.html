@@ -12,7 +12,11 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
     <div class="max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
         <!-- Formulaire -->
-        <h1 class="text-2xl font-bold mb-4">Déposer une Demande de Congé</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold mb-4">Déposer une Demande de Congé</h1>
+            <a id="login" href="login.html" class="text-blue-500 hover:underline">Se connecter</a>
+            <button id="logout" class="max-w-xs hidden mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" onclick="handleLogout()">Déconneixon</button>
+        </div>
         <form id="congeForm" class="space-y-4">
             <div>
                 <label for="nom" class="block text-gray-700">Nom:</label>
@@ -55,7 +59,7 @@
             <button type="submit"
                 class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Soumettre</button>
         </form>
-        <div class="mt-4 flex justify-between">
+        <div id="admin_pages" class="hidden mt-4 flex justify-between">
             <a href="validation.html" class="text-blue-500 hover:underline">Aller à la validation des demandes</a>
             <a href="historique.html" class="text-blue-500 hover:underline">Voir l'historique des demandes</a>
         </div>
@@ -64,6 +68,18 @@
         <span id="popupMessage"></span>
     </div>
     <script src="script.js"></script>
+
+    <script>
+        if (localStorage.getItem('isAuthenticated') !== 'true') {
+            document.getElementById('admin_pages').classList.add('hidden');
+            document.getElementById('logout').classList.add('hidden');
+            document.getElementById('login').classList.remove('hidden');
+        }else {
+            document.getElementById('admin_pages').classList.remove('hidden');
+            document.getElementById('logout').classList.remove('hidden');
+            document.getElementById('login').classList.add('hidden');
+        }
+    </script>
 </body>
 
 </html>
