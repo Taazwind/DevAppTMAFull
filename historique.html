@@ -11,41 +11,53 @@
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
     <div class="max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-2xl font-bold mb-4">Historique des Demandes</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold mb-4">Historique des Demandes</h1>
+            <button class="max-w-xs mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" onclick="handleLogout()">Déconneixon</button>
+        </div>
         <ul id="historique" class="space-y-4">
             <!-- Historique des demandes sera affiché ici -->
         </ul>
         <a href="index.html" class="block mt-4 text-blue-500 hover:underline">Retour à la page d'accueil</a>
     </div>
     <script>
+        function handleLogout() {
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = 'login.html';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            const historique = document.getElementById('historique');
-            const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
-
-            if (historique) {
-                historique.innerHTML = '';
-                demandes.forEach(demande => {
-                    const li = document.createElement('li');
-                    li.classList.add('p-4', 'border', 'rounded-lg', 'shadow-sm');
-                    li.innerHTML = `
-                        <strong>Nom:</strong> ${demande.nom}<br>
-                        <strong>Date de début:</strong> ${demande.dateDebut}<br>
-                        <strong>Date de fin:</strong> ${demande.dateFin}<br>
-                        <strong>Raison:</strong> ${demande.raison}<br>
-                        <strong>Statut:</strong> <span class="font-semibold ${getStatutClass(demande.statut)}">${demande.statut}</span>
-                    `;
-                    historique.appendChild(li);
-                });
-            }
-
-            function getStatutClass(statut) {
-                switch (statut) {
-                    case 'approuvé':
-                        return 'text-green-600';
-                    case 'refusé':
-                        return 'text-red-600';
-                    default:
-                        return 'text-yellow-600';
+            if (localStorage.getItem('isAuthenticated') !== 'true') {
+                window.location.href = 'login.html';
+            } else {
+                const historique = document.getElementById('historique');
+                const demandes = JSON.parse(localStorage.getItem('demandes')) || [];
+    
+                if (historique) {
+                    historique.innerHTML = '';
+                    demandes.forEach(demande => {
+                        const li = document.createElement('li');
+                        li.classList.add('p-4', 'border', 'rounded-lg', 'shadow-sm');
+                        li.innerHTML = `
+                            <strong>Nom:</strong> ${demande.nom}<br>
+                            <strong>Date de début:</strong> ${demande.dateDebut}<br>
+                            <strong>Date de fin:</strong> ${demande.dateFin}<br>
+                            <strong>Raison:</strong> ${demande.raison}<br>
+                            <strong>Statut:</strong> <span class="font-semibold ${getStatutClass(demande.statut)}">${demande.statut}</span>
+                        `;
+                        historique.appendChild(li);
+                    });
+                }
+    
+                function getStatutClass(statut) {
+                    switch (statut) {
+                        case 'approuvé':
+                            return 'text-green-600';
+                        case 'refusé':
+                            return 'text-red-600';
+                        default:
+                            return 'text-yellow-600';
+                    }
                 }
             }
         });
