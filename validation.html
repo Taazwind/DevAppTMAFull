@@ -15,6 +15,23 @@
         </ul>
         <a href="index.html" class="block text-center text-blue-500 hover:underline">Retour à la page principale</a>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js">
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('isAuthenticated') !== 'true') {
+                window.location.href = 'login.html';
+            }
+
+            const logoutButton = document.createElement('button');
+            logoutButton.textContent = 'Déconnexion';
+            logoutButton.classList.add('mt-4', 'bg-red-500', 'text-white', 'py-2', 'px-4', 'rounded', 'hover:bg-red-600');
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('isAuthenticated');
+                window.location.href = 'login.html';
+            });
+
+            const container = document.querySelector('.max-w-4xl');
+            container.appendChild(logoutButton);
+        });
+    </script>
 </body>
 </html>
